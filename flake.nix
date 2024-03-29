@@ -17,9 +17,9 @@
         inputs.devshell.flakeModule
         ./terraform.nix
       ];
-      systems = [ "x86_64-linux" ];
+      systems = [ "x86_64-linux" "aarch64-linux" ];
 
-      perSystem = { config, pkgs, ... }: {
+      perSystem = { config, ... }: {
         treefmt.config = {
           inherit (config.flake-root) projectRootFile;
           programs = {

@@ -1,19 +1,15 @@
 {
-  perSystem = { config, pkgs, ... }:
-    let
-      terraform = pkgs.opentofu;
-    in
-    {
-      treefmt.config = {
-        programs = {
-          terraform = {
-            package = terraform;
-            enable = true;
-          };
-        };
-      };
-      devshells.default = {
-        packages = [ terraform ];
+  perSystem = { config, pkgs, inputs', ... }: {
+    _module.args.pkgs = inputs'.nixpkgs.legacyPackages.extend (final: _: {
+      terraform = final.opentofu;
+    });
+    treefmt.config = {
+      programs = {
+        terraform.enable = true;
       };
     };
+    devshells.default = {
+      packages = [ pkgs.terraform ];
+    };
+  };
 }
