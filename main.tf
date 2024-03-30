@@ -1,3 +1,5 @@
+# TODO split this messy file into different files and/or refactor using modules
+
 terraform {
   backend "s3" {
     bucket = "nix-pizza-terraform-state"
@@ -39,7 +41,7 @@ resource "hcloud_ssh_key" "ssh_public_keys" {
 
 resource "hcloud_server" "nix-pizza" {
   name        = "nix-pizza"
-  image       = "debian-11"
+  image       = "debian-11" # used only for the initial bootstrapping
   server_type = "cax11"
   location    = "fsn1"
   ssh_keys    = [for _, v in hcloud_ssh_key.ssh_public_keys : v.id]
