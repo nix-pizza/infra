@@ -117,6 +117,21 @@
             };
           };
         };
+
+        # Just for testing
+        services.nginx = {
+          enable = true;
+          virtualHosts."^.*$" = {
+            locations = {
+              "/" = {
+                return = ''200 "Pizza con l'ananas"'';
+                extraConfig = "add_header Content-Type text/plain;";
+              };
+            };
+          };
+        };
+
+        networking.firewall.allowedTCPPorts = [ 80 ];
       })
     ];
   };
