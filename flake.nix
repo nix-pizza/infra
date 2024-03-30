@@ -7,6 +7,9 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     devshell.url = "github:numtide/devshell";
     flake-root.url = "github:srid/flake-root";
+    disko.url = "github:nix-community/disko";
+    srvos.url = "github:nix-community/srvos";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs = inputs@{ flake-parts, ... }:
@@ -16,6 +19,7 @@
         inputs.treefmt-nix.flakeModule
         inputs.devshell.flakeModule
         ./terraform.nix
+        ./hosts.nix
       ];
       systems = [ "x86_64-linux" "aarch64-linux" ];
 

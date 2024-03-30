@@ -9,7 +9,10 @@
       };
     };
     devshells.default = {
-      packages = [ pkgs.terraform ];
+      packages = with pkgs; [
+        terraform
+        jq # FIXME report upstream: nixos-anywhere terraform module needs it in PATH
+      ];
     };
   };
 }
