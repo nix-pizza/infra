@@ -3,36 +3,21 @@
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.follows = "srvos/nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     devshell.url = "github:numtide/devshell";
     flake-root.url = "github:srid/flake-root";
     disko.url = "github:nix-community/disko";
     srvos.url = "github:nix-community/srvos";
-    sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        inputs.flake-root.flakeModule
-        inputs.treefmt-nix.flakeModule
-        inputs.devshell.flakeModule
-        ./terraform.nix
-        ./hosts.nix
-      ];
-      systems = [ "x86_64-linux" "aarch64-linux" ];
-
-      perSystem = { config, ... }: {
-        treefmt.config = {
-          inherit (config.flake-root) projectRootFile;
-          programs = {
-            nixpkgs-fmt.enable = true;
-            deadnix.enable = true;
-            shellcheck.enable = true;
-            statix.enable = true;
-          };
-        };
-      };
-    };
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+    imports = [
+      ./keys
+      ./shell
+      ./hosts
+      ./formatting
+    ];
+    systems = [ "x86_64-linux" "aarch64-linux" ];
+  };
 }
