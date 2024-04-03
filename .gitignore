@@ -1,4 +1,4 @@
 result
-.envrc
 .direnv
 .terraform
+.env
