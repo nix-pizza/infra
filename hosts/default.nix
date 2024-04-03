@@ -118,10 +118,17 @@
           };
         };
 
+        security.acme = {
+          acceptTerms = true;
+          defaults.email = "info@nix.pizza";
+        };
+
         # Just for testing
         services.nginx = {
           enable = true;
-          virtualHosts."^.*$" = {
+          virtualHosts."ananas.nix.pizza" = {
+            default = true;
+            enableACME = true;
             locations = {
               "/" = {
                 return = ''200 "Pizza con l'ananas"'';
