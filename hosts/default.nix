@@ -26,7 +26,7 @@
         system.stateVersion = "23.05";
         networking.hostName = "nix-pizza";
 
-        systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f9:c010:52fd::1/128";
+        systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f8:c013:2189::1/64";
 
         users.users.root.openssh.authorizedKeys.keys = with config.infra.sshKeys; [
           aciceri.key
