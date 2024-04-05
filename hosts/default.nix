@@ -129,6 +129,7 @@
           virtualHosts."ananas.nix.pizza" = {
             default = true;
             enableACME = true;
+            addSSL = true;
             locations = {
               "/" = {
                 return = ''200 "Pizza con l'ananas"'';
@@ -138,7 +139,7 @@
           };
         };
 
-        networking.firewall.allowedTCPPorts = [ 80 ];
+        networking.firewall.allowedTCPPorts = [ 80 443 ];
       })
     ];
   };
