@@ -10,6 +10,7 @@
     disko.url = "github:nix-community/disko";
     srvos.url = "github:nix-community/srvos";
     impermanence.url = "github:nix-community/impermanence";
+    agenix-shell.url = "github:aciceri/agenix-shell";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {

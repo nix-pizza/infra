@@ -8,6 +8,11 @@ variable "cloudflare_account_id" {
   sensitive = true
 }
 
+variable "cloudflare_dns_token" {
+  type      = string
+  sensitive = true
+}
+
 variable "hcloud_token" {
   type      = string
   sensitive = true

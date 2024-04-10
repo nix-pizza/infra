@@ -2,6 +2,7 @@
   imports = [
     inputs.flake-root.flakeModule
     inputs.devshell.flakeModule
+    ./secrets.nix
   ];
 
   perSystem = { config, pkgs, inputs', ... }: {

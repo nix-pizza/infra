@@ -19,6 +19,11 @@ provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
 
+provider "cloudflare" {
+  alias     = "dns"
+  api_token = var.cloudflare_dns_token
+}
+
 resource "cloudflare_r2_bucket" "cloudflare-bucket" {
   account_id = var.cloudflare_account_id
   name       = "nix-pizza-terraform-state"
@@ -64,4 +69,29 @@ module "deploy" {
 
   target_host = hcloud_server.nix-pizza.ipv4_address
   instance_id = hcloud_server.nix-pizza.id
+}
+
+
+data "cloudflare_zone" "nix_pizza_zone" {
+  provider = cloudflare.dns
+  name     = "nix.pizza"
+}
+
+resource "cloudflare_record" "wildcard_record_4" {
+  provider = cloudflare.dns
+  zone_id  = data.cloudflare_zone.nix_pizza_zone.id
+  name     = "*"
+  value    = hcloud_server.nix-pizza.ipv4_address
+  type     = "A"
+  ttl      = 300
+}
+
+
+resource "cloudflare_record" "wildcard_record_6" {
+  provider = cloudflare.dns
+  zone_id  = data.cloudflare_zone.nix_pizza_zone.id
+  name     = "*"
+  value    = hcloud_server.nix-pizza.ipv6_address
+  type     = "AAAA"
+  ttl      = 300
 }
