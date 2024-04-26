@@ -21,4 +21,6 @@ jobs:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
         extra_nix_config: | 
           system = ${{ matrix.system }}
+    - run: |
+        nix run .#inject-secrets
     - run: nix flake check -L

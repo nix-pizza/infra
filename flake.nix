@@ -20,6 +20,7 @@
       ./hosts
       ./formatting
       ./checks
+      ./packages
     ];
     systems = [ "x86_64-linux" "aarch64-linux" ];
   };
