@@ -11,5 +11,5 @@ in {
 
     "TF_VAR_hcloud_token.age".publicKeys = coreKeys;
 
-    "test.age".publicKeys = coreKeys;
+    "CACHIX_AUTH_TOKEN.age".publicKeys = coreKeys;
   }
