@@ -18,6 +18,8 @@
       packages = with pkgs; [
         terraform
         jq # FIXME report upstream: nixos-anywhere terraform module needs it in PATH
+	inputs'.agenix.packages.agenix
+	rage
       ];
       devshell.startup.terraform-init.text = ''
         tofu init
