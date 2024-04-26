@@ -20,7 +20,7 @@
         jq # FIXME report upstream: nixos-anywhere terraform module needs it in PATH
       ];
       devshell.startup.terraform-init.text = ''
-        	tofu init
+        tofu init
       '';
     };
   };
