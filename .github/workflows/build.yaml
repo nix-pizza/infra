@@ -1,13 +1,20 @@
-name: "Evaluate outputs and build checks"
+name: "CI"
 on:
-  pull_request:
   push:
 jobs:
-  tests:
+  nix-flake-check:
+    # TODO idea: instead of using QEMU (which is slow) use the host as remote builder
+    strategy:
+      matrix:
+        system: ["aarch64-linux", "x86_64-linux"]
     runs-on: ubuntu-latest
+    name: "Build checks for ${{ matrix.system }}"
     steps:
+    - run: "[ '${{ matrix.system }}' == 'aarch64-linux' ] && sudo apt-get install -y qemu-user-static || true"
     - uses: actions/checkout@v4
     - uses: cachix/install-nix-action@v25
       with:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
-    - run: nix flake check
+        extra_nix_config: | 
+          system = ${{ matrix.system }}
+    - run: nix flake check -L
