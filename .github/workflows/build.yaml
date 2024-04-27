@@ -21,12 +21,16 @@ jobs:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
         extra_nix_config: | 
           system = ${{ matrix.system }}
-    - uses: DeterminateSystems/magic-nix-cache-action@v4
-    - run: |
+    - id: retrieve-cachix-auth-token
+      run: |
         source "$(nix build .#inject-secrets --no-link --print-out-paths)"/bin/install-agenix-shell
-        printenv | sed 's;=.*;;' | sort
-
-    # - run: nix flake check -L
-    - run: |
-        nix run .#opentofu -- init
-        nix run .#opentofu -- apply --auto-approve
+        echo "CACHIX_AUTH_TOKEN=$CACHIX_AUTH_TOKEN" > $GITHUB_OUTPUT
+    - uses: cachix/cachix-action@v14
+      with:
+        name: nix-pizza
+        authToken: ${{ steps.retrieve-cachix-auth-token.outputs.CACHIX_AUTH_TOKEN }}
+    - run: nix flake check -L
+    # - run: |
+        # source "$(nix build .#inject-secrets --no-link --print-out-paths)"/bin/install-agenix-shell
+        # nix run .#opentofu -- init
+        # nix run .#opentofu -- apply --auto-approve
