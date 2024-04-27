@@ -21,10 +21,7 @@ jobs:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
         extra_nix_config: | 
           system = ${{ matrix.system }}
+    - uses: DeterminateSystems/magic-nix-cache-action@v4
     - run: |
         source "$(nix build .#inject-secrets --no-link --print-out-paths)"/bin/install-agenix-shell
-    - uses: cachix/cachix-action@v14
-      with:
-        name: nix-pizza
-        authToken: $CACHIX_AUTH_TOKEN
     - run: nix flake check -L
