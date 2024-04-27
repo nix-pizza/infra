@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+topArgs@{ lib, ... }: {
   options.infra.sshKeys = lib.mkOption {
     type = lib.types.attrsOf (lib.types.submodule ({ config, ... }: {
       options = {
@@ -27,14 +27,15 @@
     description = "SSH keys";
   };
 
-  config.perSystem = { pkgs, ... }: {
+  config.perSystem = { config, pkgs, ... }: {
+    packages.ssh-public-keys =
+      let
+        keys = lib.filterAttrs (_: key: key.terraform) topArgs.config.infra.sshKeys;
+      in
+      pkgs.writers.writeJSON "ssh_public_keys.json" keys;
     devshells.default.env = [{
       name = "TF_VAR_ssh_public_keys";
-      value =
-        let
-          keys = lib.filterAttrs (_: key: key.terraform) config.infra.sshKeys;
-        in
-        pkgs.writers.writeJSON "ssh_public_keys.json" keys;
+      value = config.packages.ssh-public-keys;
     }];
   };
 

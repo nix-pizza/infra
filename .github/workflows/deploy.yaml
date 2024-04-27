@@ -1,5 +1,9 @@
-name: "CI"
-on: pull_request_target
+# FIXME This action is equal to build.yaml expect for an extra step at the end, we can deduplicate
+name: "Deploy"
+on:
+  push:
+    branches:
+      - main
 jobs:
   nix-flake-check:
     # TODO idea: instead of using QEMU (which is slow) use the host as remote builder
@@ -31,3 +35,9 @@ jobs:
         name: nix-pizza
         authToken: ${{ steps.retrieve-cachix-auth-token.outputs.CACHIX_AUTH_TOKEN }}
     - run: nix flake check -L
+    - run: |
+        [ '${{ matrix.system }}' != 'aarch64-linux' ] && exit 0
+        source "$(nix build .#inject-secrets --no-link --print-out-paths)"/bin/install-agenix-shell
+        export TF_VAR_ssh_public_keys="$(nix build .#ssh-public-keys --no-link --print-out-paths)"
+        nix run .#opentofu -- init
+        nix run .#opentofu -- apply --auto-approve
