@@ -1,5 +1,5 @@
 {
-  perSystem = {config, pkgs, lib, ...}: {
+  perSystem = { config, ... }: {
     packages.inject-secrets = config.agenix-shell.installationScript;
   };
 }

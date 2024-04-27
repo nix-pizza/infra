@@ -1,9 +1,6 @@
-toplevel@{ inputs, lib, ... }:
-let
-  inherit (lib) attrValues concatMapStringsSep genAttrs;
-in
-{
+{ inputs, lib, ... }: {
   imports = [ inputs.agenix-shell.flakeModules.default ];
+
   agenix-shell.secrets = lib.mapAttrs'
     (filename: _: lib.nameValuePair
       (lib.removeSuffix ".age" filename)
