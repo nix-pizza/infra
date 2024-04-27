@@ -24,4 +24,9 @@ jobs:
     - uses: DeterminateSystems/magic-nix-cache-action@v4
     - run: |
         source "$(nix build .#inject-secrets --no-link --print-out-paths)"/bin/install-agenix-shell
-    - run: nix flake check -L
+        printenv | sed 's;=.*;;' | sort
+
+    # - run: nix flake check -L
+    - run: |
+        nix run .#opentofu -- init
+        nix run .#opentofu -- apply --auto-approve

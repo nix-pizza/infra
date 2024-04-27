@@ -1,5 +1,8 @@
 {
-  perSystem = { config, ... }: {
-    packages.inject-secrets = config.agenix-shell.installationScript;
+  perSystem = { config, pkgs, ... }: {
+    packages = {
+      inject-secrets = config.agenix-shell.installationScript;
+      inherit (pkgs) opentofu;
+    };
   };
 }
