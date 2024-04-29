@@ -77,6 +77,24 @@ data "cloudflare_zone" "nix_pizza_zone" {
   name     = "nix.pizza"
 }
 
+resource "cloudflare_record" "root_record_4" {
+  provider = cloudflare.dns
+  zone_id  = data.cloudflare_zone.nix_pizza_zone.id
+  name     = "root"
+  value    = hcloud_server.nix-pizza.ipv4_address
+  type     = "A"
+  ttl      = 300
+}
+
+resource "cloudflare_record" "root_record_6" {
+  provider = cloudflare.dns
+  zone_id  = data.cloudflare_zone.nix_pizza_zone.id
+  name     = "root"
+  value    = hcloud_server.nix-pizza.ipv6_address
+  type     = "AAAA"
+  ttl      = 300
+}
+
 resource "cloudflare_record" "wildcard_record_4" {
   provider = cloudflare.dns
   zone_id  = data.cloudflare_zone.nix_pizza_zone.id
