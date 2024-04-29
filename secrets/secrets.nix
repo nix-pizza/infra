@@ -13,4 +13,6 @@ in
   "TF_VAR_hcloud_token.age".publicKeys = coreKeys;
 
   "CACHIX_AUTH_TOKEN.age".publicKeys = coreKeys;
+
+  "HEDGEDOC_ENVIRONMENT.age".publicKeys = coreKeys ++ [ nix-pizza.key ];
 }
