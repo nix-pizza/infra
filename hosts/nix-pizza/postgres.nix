@@ -6,6 +6,7 @@
   services.postgresqlBackup = {
     enable = true;
     backupAll = true;
+    location = "/var/backup/postgresql";
   };
 
   environment.persistence."/persist".directories = [
