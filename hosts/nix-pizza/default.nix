@@ -42,6 +42,12 @@
     ];
   };
 
+  # Agenix decrypts before impermanence creates mounts so we have to get keys from /persist
+  age.identityPaths = [
+    "/persist/etc/ssh/ssh_host_ed25519_key"
+    "/persist/etc/ssh/ssh_host_rsa_key"
+  ];
+
   fileSystems."/persist".neededForBoot = true;
   boot.tmp.cleanOnBoot = true;
 
