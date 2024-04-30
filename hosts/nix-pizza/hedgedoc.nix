@@ -30,8 +30,6 @@ in
     group = "hedgedoc";
   };
 
-  # TODO backup cfg.settings.uploadPath
-
   services.hedgedoc = {
     enable = true;
     settings = {
@@ -54,5 +52,4 @@ in
   environment.persistence."/persist".directories = [
     cfg.settings.uploadPath
   ];
-
 }
