@@ -2,6 +2,7 @@
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     ./postgres.nix
+    ./fail2ban.nix
     ./nginx.nix
     ./hedgedoc.nix
   ];
