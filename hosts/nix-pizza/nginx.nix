@@ -13,4 +13,8 @@
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  environment.persistence."/persist".directories = [
+    "/var/lib/acme"
+  ];
 }
