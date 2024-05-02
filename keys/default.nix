@@ -16,5 +16,9 @@
       key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/QCcDbHe8u7oczv2djwDb4S7SC+rasbGiVl2IW5585";
       terraform = true;
     };
+    nix-pizza = {
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG3+B5N13uj6kGwWQZyiNYAwVQpxg5l/GjrKLKGoZLpn";
+      terraform = false;
+    };
   };
 }

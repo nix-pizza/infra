@@ -13,4 +13,8 @@ in
   "TF_VAR_hcloud_token.age".publicKeys = coreKeys;
 
   "CACHIX_AUTH_TOKEN.age".publicKeys = coreKeys;
+
+  "HEDGEDOC_ENVIRONMENT.age".publicKeys = coreKeys ++ [ nix-pizza.key ];
+  "HETZNER_STORAGE_BOX_SSH_PASSWORD.age".publicKeys = coreKeys ++ [ nix-pizza.key ];
+  "NIX_PIZZA_RESTIC_PASSWORD.age".publicKeys = coreKeys ++ [ nix-pizza.key ];
 }
