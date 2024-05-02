@@ -1,0 +1,33 @@
+name: "CI"
+on: pull_request_target
+jobs:
+  nix-flake-check:
+    # TODO idea: instead of using QEMU (which is slow) use the host as remote builder
+    strategy:
+      matrix:
+        system: ["aarch64-linux", "x86_64-linux"]
+    runs-on: ubuntu-latest
+    name: "Build checks for ${{ matrix.system }}"
+    steps:
+    - run: |
+        mkdir -p /home/runner/.ssh
+        echo "${{ secrets.SSH_KEY }}" > /home/runner/.ssh/id_ed25519
+        chmod 600 /home/runner/.ssh/id_ed25519
+    - run: "[ '${{ matrix.system }}' == 'aarch64-linux' ] && sudo apt-get install -y qemu-user-static || true"
+    - uses: actions/checkout@v4
+    - uses: cachix/install-nix-action@v25
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+        extra_nix_config: | 
+          system = ${{ matrix.system }}
+          trusted-public-keys = nix-pizza.cachix.org-1:TQe66aP2buN2KXWrZqpdko7GAL0WtbPA40d+wlnEiyo= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+          substituters = https://nix-pizza.cachix.org https://cache.nixos.org/
+    - id: retrieve-cachix-auth-token
+      run: |
+        source "$(nix build .#inject-secrets --no-link --print-out-paths)"/bin/install-agenix-shell
+        echo "CACHIX_AUTH_TOKEN=$CACHIX_AUTH_TOKEN" > $GITHUB_OUTPUT
+    - uses: cachix/cachix-action@v14
+      with:
+        name: nix-pizza
+        authToken: ${{ steps.retrieve-cachix-auth-token.outputs.CACHIX_AUTH_TOKEN }}
+    - run: nix flake check -L

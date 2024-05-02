@@ -12,5 +12,9 @@
       key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFp38ldUYwFQ9JlZ4CTBWWM6S9OmY7yhJSHyMXSASZB";
       terraform = true;
     };
+    github = {
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/QCcDbHe8u7oczv2djwDb4S7SC+rasbGiVl2IW5585";
+      terraform = true;
+    };
   };
 }

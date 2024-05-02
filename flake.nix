@@ -10,6 +10,7 @@
     disko.url = "github:nix-community/disko";
     srvos.url = "github:nix-community/srvos";
     impermanence.url = "github:nix-community/impermanence";
+    agenix.url = "github:ryantm/agenix";
     agenix-shell.url = "github:aciceri/agenix-shell";
   };
 
@@ -19,6 +20,8 @@
       ./shell
       ./hosts
       ./formatting
+      ./checks
+      ./packages
     ];
     systems = [ "x86_64-linux" "aarch64-linux" ];
   };
