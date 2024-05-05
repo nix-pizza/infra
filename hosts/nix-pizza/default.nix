@@ -6,6 +6,7 @@
     ./fail2ban.nix
     ./nginx.nix
     ./hedgedoc.nix
+    ./wastebin.nix
   ];
 
   boot.kernelParams = [ "console=tty" ];
