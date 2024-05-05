@@ -1,8 +1,10 @@
-{config, lib, ...}: let
+{ config, lib, ... }:
+let
   cfg = config.services.wastebin;
   host = "marinara.nix.pizza";
   port = 8088;
-in {
+in
+{
   # contains WASTEBIN_PASSWORD_SALT and WASTEBIN_SIGNING_KEY
   age.secrets.WASTEBIN_ENVIRONMENT = {
     file = ../../secrets/WASTEBIN_ENVIRONMENT.age;
@@ -16,7 +18,7 @@ in {
     group = "wastebin";
     isSystemUser = true;
   };
-  
+
   services.wastebin = {
     enable = true;
     stateDir = "/var/lib/wastebin";
@@ -33,7 +35,7 @@ in {
     Group = "wastebin";
     DynamicUser = lib.mkForce false;
   };
- 
+
   environment.persistence."/persist".directories = [
     cfg.stateDir
   ];
