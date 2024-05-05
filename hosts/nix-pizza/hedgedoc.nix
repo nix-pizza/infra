@@ -5,7 +5,6 @@ in
 {
   services.nginx = {
     virtualHosts."${cfg.settings.domain}" = {
-      default = true;
       enableACME = true;
       forceSSL = true;
       locations."/".proxyPass = "http://${cfg.settings.host}:${builtins.toString cfg.settings.port}";
