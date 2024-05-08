@@ -20,6 +20,7 @@
         jq # FIXME report upstream: nixos-anywhere terraform module needs it in PATH
         inputs'.agenix.packages.agenix
         config.agenix-shell.agePackage
+        pkgs.age
       ];
       devshell.startup.terraform-init.text = ''
         tofu init
