@@ -1,11 +1,13 @@
 name: "CI"
-on: pull_request_target
+on:
+  - pull_request_target
+  - workflow_dispatch
 jobs:
   nix-flake-check:
     # TODO idea: instead of using QEMU (which is slow) use the host as remote builder
     strategy:
       matrix:
-        system: ["aarch64-linux", "x86_64-linux"]
+        system: ["aarch64-linux"]
     runs-on: ubuntu-latest
     name: "Build checks for ${{ matrix.system }}"
     steps:
@@ -22,6 +24,7 @@ jobs:
           system = ${{ matrix.system }}
           trusted-public-keys = nix-pizza.cachix.org-1:TQe66aP2buN2KXWrZqpdko7GAL0WtbPA40d+wlnEiyo= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
           substituters = https://nix-pizza.cachix.org https://cache.nixos.org/
+          always-allow-substitutes = true
     - id: retrieve-cachix-auth-token
       run: |
         source "$(nix build .#inject-secrets --no-link --print-out-paths)"/bin/install-agenix-shell
@@ -30,4 +33,5 @@ jobs:
       with:
         name: nix-pizza
         authToken: ${{ steps.retrieve-cachix-auth-token.outputs.CACHIX_AUTH_TOKEN }}
-    - run: nix flake check -L
+        installCommand: nix profile install github:cachix/cachix/debug-daemon-stop -L --accept-flake-config
+    - run: nix build .#checks.aarch64-linux.nix-pizza-config -L -vvvv

@@ -26,6 +26,7 @@ jobs:
           system = ${{ matrix.system }}
           trusted-public-keys = nix-pizza.cachix.org-1:TQe66aP2buN2KXWrZqpdko7GAL0WtbPA40d+wlnEiyo= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
           substituters = https://nix-pizza.cachix.org https://cache.nixos.org/
+          always-allow-substitutes = true
     - id: retrieve-cachix-auth-token
       run: |
         source "$(nix build .#inject-secrets --no-link --print-out-paths)"/bin/install-agenix-shell
