@@ -2,7 +2,6 @@ name: "CI"
 on:
   - pull_request_target
   - workflow_dispatch
-  - push
 jobs:
   nix-flake-check:
     # TODO idea: instead of using QEMU (which is slow) use the host as remote builder
@@ -30,11 +29,9 @@ jobs:
       run: |
         source "$(nix build .#inject-secrets --no-link --print-out-paths)"/bin/install-agenix-shell
         echo "CACHIX_AUTH_TOKEN=$CACHIX_AUTH_TOKEN" > $GITHUB_OUTPUT
-    - uses: cachix/cachix-action@master
+    - uses: cachix/cachix-action@v14
       with:
         name: nix-pizza
         authToken: ${{ steps.retrieve-cachix-auth-token.outputs.CACHIX_AUTH_TOKEN }}
         installCommand: nix profile install github:cachix/cachix/debug-daemon-stop -L --accept-flake-config
-    - run: nix eval .#checks.aarch64-linux.nix-pizza-config.drvPath
-    - run: nix eval .#checks.aarch64-linux.nix-pizza-config.outPath
     - run: nix build .#checks.aarch64-linux.nix-pizza-config -L -vvvv
