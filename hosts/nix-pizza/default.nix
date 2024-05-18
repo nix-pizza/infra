@@ -8,6 +8,7 @@
     ./mail.nix
     ./hedgedoc.nix
     ./wastebin.nix
+    ./nix-milano
   ];
 
   boot.kernelParams = [ "console=tty" ];
