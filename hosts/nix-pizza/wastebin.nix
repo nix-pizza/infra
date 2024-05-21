@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.services.wastebin;
-  host = "marinara.nix.pizza";
+  host = "paste.nix.pizza";
   port = 8088;
 in
 {

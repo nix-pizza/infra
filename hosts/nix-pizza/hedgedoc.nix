@@ -32,7 +32,7 @@ in
   services.hedgedoc = {
     enable = true;
     settings = {
-      domain = "margherita.nix.pizza";
+      domain = "pad.nix.pizza";
       host = "localhost";
       port = 3000;
       allowGravatar = true;
