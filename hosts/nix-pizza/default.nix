@@ -5,6 +5,7 @@
     ./backup.nix
     ./fail2ban.nix
     ./nginx.nix
+    ./mail.nix
     ./hedgedoc.nix
     ./wastebin.nix
   ];
@@ -20,7 +21,10 @@
   };
 
   system.stateVersion = "23.05";
-  networking.hostName = "nix-pizza";
+  networking = {
+    hostName = "nix-pizza";
+    domain = "nix.pizza";
+  };
 
   systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f8:c013:2189::1/64";
 

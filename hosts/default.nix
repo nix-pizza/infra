@@ -8,6 +8,7 @@
       inputs.srvos.nixosModules.server
       inputs.impermanence.nixosModules.impermanence
       inputs.agenix.nixosModules.age
+      inputs.simple-nixos-mailserver.nixosModules.mailserver
       {
         users.users.root.openssh.authorizedKeys.keys = with config.infra.sshKeys; [
           aciceri.key
