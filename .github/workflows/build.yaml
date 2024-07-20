@@ -34,4 +34,4 @@ jobs:
         name: nix-pizza
         authToken: ${{ steps.retrieve-cachix-auth-token.outputs.CACHIX_AUTH_TOKEN }}
         installCommand: nix profile install github:cachix/cachix/debug-daemon-stop -L --accept-flake-config
-    - run: nix build .#checks.aarch64-linux.nix-pizza-config -L -vvvv
+    - run: nix flake check -L
