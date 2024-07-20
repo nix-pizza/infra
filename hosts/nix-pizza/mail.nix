@@ -10,7 +10,7 @@ in
 
     # nix run nixpkgs#mkpasswd -- -sm bcrypt
     loginAccounts = {
-      "aciceri@nix.pizza".hashedPassword = "$2b$05$SHmYA8c9Nxx8A7dbqdsInugMNWd5mZydtC485VEbQ9NtoWJ2qUNCC"; 
+      "aciceri@nix.pizza".hashedPassword = "$2b$05$SHmYA8c9Nxx8A7dbqdsInugMNWd5mZydtC485VEbQ9NtoWJ2qUNCC";
       "zarel@nix.pizza".hashedPassword = "$2b$05$XHbxpdM8lRDwyhh.iZiEFe0HVmOutLEZBfCBTKTABb9cCB5QVPrfO";
       "albertodvp@nix.pizza".hashedPassword = "$2b$05$2SD6.tz4CZ7n7amcL9LLzua/vDbM3..laGAGYXylM94m9l4EMzLlW";
     };
@@ -36,11 +36,11 @@ in
     forwards = {
       "milano@nix.pizza" = [
         "andrea.ciceri@autistici.org"
-	"alberto.fanton@protonmail.com"
+        "alberto.fanton@protonmail.com"
       ];
       "milan@nix.pizza" = [
         "andrea.ciceri@autistici.org"
-	"alberto.fanton@protonmail.com"
+        "alberto.fanton@protonmail.com"
       ];
     };
 
