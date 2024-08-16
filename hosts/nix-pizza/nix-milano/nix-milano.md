@@ -26,3 +26,7 @@ Sul [canale YouTube](https://www.youtube.com/@NixMilano) trovi le registrazioni 
 ![](assets/photo-beatdata-whiteboard.webp)
 ![](assets/photo-eating-pizza-outside.webp)
 ![](assets/photo-ideas.webp)
+
+#### Sorgente
+
+Il sorgente di questa pagina si trova [qui su GitHub](https://github.com/nix-pizza/infra/tree/main/hosts/nix-pizza/nix-milano).
