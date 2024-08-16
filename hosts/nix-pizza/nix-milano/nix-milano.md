@@ -4,7 +4,7 @@
 Per vedere i prossimi eventi organizzati o iscriverti ci trovi [su meetup](https://www.meetup.com/nix-milano/).
 
 # Matrix
-Unisciti al [canale Matrix](https://matrix.to/#/#nix-milan:matrix.org).
+Unisciti al [canale Matrix](https://matrix.to/#/#milan:nixos.org).
 
 # Telegram
 Unisciti al [gruppo Telegram](https://t.me/nixMilan).
