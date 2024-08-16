@@ -16,6 +16,7 @@ in
       enableACME = true;
       forceSSL = true;
       locations."/".root = nix-milano;
+      serverAliases = [ "milano.nix.pizza" ];
     };
   };
 }
