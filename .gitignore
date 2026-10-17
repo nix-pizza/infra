@@ -1,5 +1,0 @@
-.direnv
-.pre-commit-config.yaml
-.terraform
-terraform.tfstate.backup
-result
