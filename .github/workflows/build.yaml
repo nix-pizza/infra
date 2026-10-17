@@ -1,6 +1,6 @@
 name: "CI"
 on:
-  - pull_request_target
+  - pull_request
   - workflow_dispatch
 jobs:
   nix-flake-check:
@@ -35,3 +35,10 @@ jobs:
         authToken: ${{ steps.retrieve-cachix-auth-token.outputs.CACHIX_AUTH_TOKEN }}
         installCommand: nix profile install github:cachix/cachix/debug-daemon-stop -L --accept-flake-config
     - run: nix flake check -L
+    - name: OpenTofu plan
+      run: |
+        source "$(nix build .#inject-secrets --no-link --print-out-paths)"/bin/install-agenix-shell
+        export TF_VAR_ssh_public_keys="$(nix build .#ssh-public-keys --no-link --print-out-paths)"
+        export TF_VAR_github_members="$(nix build .#github-members --no-link --print-out-paths)"
+        nix run .#opentofu -- init -input=false
+        nix run .#opentofu -- plan -input=false -lock=false -no-color
