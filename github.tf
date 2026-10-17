@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    github = {
-      source  = "integrations/github"
-      version = "~> 6.0"
-    }
-  }
-}
-
 # Personal access token (classic, admin:org) of ambrogio-bot, an owner of the organization
 provider "github" {
   token = var.github_token

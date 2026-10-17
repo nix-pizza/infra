@@ -1,6 +1,25 @@
 # TODO split this messy file into different files and/or refactor using modules
 
 terraform {
+  # cloudflare and hcloud keep the legacy hashicorp/ addresses recorded in the
+  # state (aliases on the OpenTofu registry).
+  required_providers {
+    cloudflare = {
+      source  = "hashicorp/cloudflare"
+      version = "~> 4.28"
+    }
+    # Hetzner removed datacenters from its API in July 2026: older providers
+    # read a null location and plan a server replacement.
+    hcloud = {
+      source  = "hashicorp/hcloud"
+      version = "~> 1.70"
+    }
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.0"
+    }
+  }
+
   backend "s3" {
     bucket = "nix-pizza-terraform-state"
     key    = "terraform.tfstate"

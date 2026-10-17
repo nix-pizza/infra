@@ -2,7 +2,8 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.opentofu.org/hashicorp/cloudflare" {
-  version = "4.28.0"
+  version     = "4.28.0"
+  constraints = "~> 4.28"
   hashes = [
     "h1:1cbyofIcJE2Zqgwii9+1r9bjHBzGeea62eEPtOyFlmg=",
     "h1:6n93yKVG5miY66OD/LZGo6jE8NHykvtvAQOgKagTmNk=",
@@ -63,36 +64,35 @@ provider "registry.opentofu.org/hashicorp/external" {
 }
 
 provider "registry.opentofu.org/hashicorp/hcloud" {
-  version = "1.46.0"
+  version     = "1.70.0"
+  constraints = "~> 1.70"
   hashes = [
-    "h1:+SlL+rRFl9FIx7n08o/ho+MsBTW3wS1YUnGRAIMczSo=",
-    "h1:01tgyX76IdR6OjvATuHXZBNIWDBBtOS4sR4HFtayjOc=",
-    "h1:6E5tYrj22OdGuxXbJGjcYkyv5D6BJfPlHjGr/s242N0=",
-    "h1:AxHBaH9Kjfna04aHGhL/X5bUo78FyE4jYM/+gSXvLeU=",
-    "h1:HPo3DUCMOzEMUOEunwbzFjhnph2qnCqcpnnw+pF5JC8=",
-    "h1:Hp6SBA7qK930dyW+OGx0ks1h4gNSi9GaCLAP9MKKCLk=",
-    "h1:ZO3g1y9xJ1MSUJEGZrLWlrzTfazeoXeN2qhFTn7CpV4=",
-    "h1:cJ34ETM/ydcV99jTMVxL1e1/RYj3rC4fFnif00dvknI=",
-    "h1:cbFHrz2MzMXeDXRhTWB//tb2hmYHJXfw36+ofMZDQ60=",
-    "h1:fbUa1wP6KGZmXQqJter/Sbkfm+J22H4PP8/KXZzKeXI=",
-    "h1:gJuznWxKbGwt4mFX+dO7P99yAtCygvCIJ0BxZVMPQYI=",
-    "h1:r6VB9HTSYRCPMLfUzoLAMPZwbIZwK9lcnlaN7CX6whA=",
-    "h1:uTVidC4H3x4PyM5OAas931bsrNj4t1ahI4vCPsqYx34=",
-    "h1:xL/kIDzfQNuxgce5UobeiVYHfcaJNo0axSHQ1MwVKsg=",
-    "zh:023efb07c72ed81abbf35cd048f7a82f7f831ca99141d431154fe598216e6f07",
-    "zh:0c3cee21cdc9115cc2d14b7723d3dd0f536e3591e4c3d8a807ca43951192c0f4",
-    "zh:1e88f4e0b494bebc7b37ddf4e70ff681ce56f85827f6ad4eda3c133fee52a06b",
-    "zh:2cc90057f67ee30af8c5281024626771560c21a4364644f8198e080c480f9c27",
-    "zh:58bdf4e592f2239feb19a01875c3a9761e1025121647380a39b26df79494e752",
-    "zh:613650726afcaeb480bb52262b055af9f71a9c2b3cabe215e0be3bcf83b3c95a",
-    "zh:80de3a834f2d53f68c8dd50bc997b9931cceeb2a9aadb0a951da62e1a509aca3",
-    "zh:96a8c1c10687f1bc9ddbb68b894d305df09d44f46fc84345a247e1d9c76df595",
-    "zh:98624877d3f81005a1600552d2c6afbb800147bdefe2061f7cc837e8a07c3765",
-    "zh:bbd6be6af92096569a05a0412774d018d90234f280ac13c5fadabfcb9033f3e8",
-    "zh:c7258ad29442b9833463b6d158626e38182de7f22a205f97f8969d1ce721f18f",
-    "zh:d703b1f2343e240dbb5396693979ca819f4c1dfc7088e4c78b1306532fa9a5e6",
-    "zh:e98bae12f3b4319cd0f3f7e270208bd04ae3d15a6d6a79b26ddbb15148b50c36",
-    "zh:fd5444906d96a25e4fd7896945a281976658ec3eb256215ede231bfa8c7173f0",
+    "h1:+nY9Xo3ZB2vlA7uu0ZTvrMqecI6FrYNwVu3k9/t1bqg=",
+    "h1:29eIqhG8FBfJguxHUpIOoEvgZyEd2cHIvKi0fV7cnSk=",
+    "h1:DM3isqmJje9o1YQSZuX9j9DvC78nwmjmcBFjJs1R120=",
+    "h1:Kq6e2yW9Vk9qqW0po/xx6oiQV/puXzSCfEssYt0KwEY=",
+    "h1:Sypb6YVdXAvNlQNCJaxingPkz2A8g4S5EB6siQU/Lcs=",
+    "h1:Vs2znT3zQ0+CIAr9v/KRiest5ibjGsBCoTNEikJ/ygg=",
+    "h1:WyDAuMtbG1HvPacsfu0XEcXoYL2TNRqaH5I+kxQ+eqk=",
+    "h1:fDXwl7ysDf9gpEs9KtthbbVIuXgXEaC6p1jXKNdRIt0=",
+    "h1:jkYnglXYJM4SZk07O0VUatB5nvdrqMgbKqcaIVRUnxU=",
+    "h1:nhyNLzlSqmszYeEBKOswVEUa9DXhn44CA1uMaLdaB7w=",
+    "h1:sbH3TWrN76YxSGz9gJHrdZlhGkn+w1OD53np1gJ4cBs=",
+    "h1:waIQQBAxO8x0tcLrDsTlM/fjGRtTpff3EO/JcHDp210=",
+    "h1:yTHBMy3YwZvZhkpZdJbyUKpUr2yOiGd3TQYVXuWQfGw=",
+    "zh:0f5e78e1ca0d8bb2a220c84dcd51f6b2ea82365a6ed757875f18d6f28b137bbe",
+    "zh:1113a271be7b0a7242815dc201f8d04eaeb78e3049ba3828d3005cbfe7314c71",
+    "zh:172fc561f73e569ef3ffed6f40f2b35fa7ab6ddbfffc753ddd7a301ed9aadfb4",
+    "zh:1c562f4f7b17ced14ec02ca4aa4deb6d43dfc8b35f729468ba210d562d22cd31",
+    "zh:1dd079848d8af07ae63dc5bb93f814b02fa8b773506aebb5d2ae7c02faeb5d7c",
+    "zh:3e1f82622d44611a2864fb6a3cbb9a239d38a07b59847937198d542d39a8d963",
+    "zh:46c767372564abfa9dbb958ce6117fda302f15495b67ba643d6f854b5a7ed204",
+    "zh:69ba6ccf47084a1bdcd74f13db2fad6cb8b5d3e5b73ef2683d74182031cbdbb9",
+    "zh:aa3e1a7c9aca9458b2b93ed2ea74327e6164a6920ddec41115c3d6658e97d6a6",
+    "zh:c0113781f736ed69d6440ba594c2642225cdb0aeb4d85065936b616bc0ff7918",
+    "zh:c4c5dd5b4c212e9c22e159f003f92b806b47650ca0e6b4e6e279680c08eb535a",
+    "zh:d6421b0e5b9fb042c0d8719efd2181296efb76f1bb8a3f50c33e9e8c36ac373d",
+    "zh:f02b97d2b8698cd160b092b682a77bbe6a888fa2b5469a57659a095f1480a515",
   ]
 }
 
