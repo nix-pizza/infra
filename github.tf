@@ -29,11 +29,21 @@ resource "github_organization_settings" "org" {
   default_repository_permission = "read"
 }
 
-# Existing members are imported, the others receive an invitation on apply
+# Existing members are imported, the others receive an invitation on apply.
+# Static blocks: the OpenTofu in CI predates for_each in import.
 import {
-  for_each = toset(["aciceri", "zarelit", "ambrogio-bot"])
-  to       = github_membership.member[each.key]
-  id       = "nix-pizza:${each.key}"
+  to = github_membership.member["aciceri"]
+  id = "nix-pizza:aciceri"
+}
+
+import {
+  to = github_membership.member["zarelit"]
+  id = "nix-pizza:zarelit"
+}
+
+import {
+  to = github_membership.member["ambrogio-bot"]
+  id = "nix-pizza:ambrogio-bot"
 }
 
 resource "github_membership" "member" {
