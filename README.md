@@ -4,7 +4,7 @@
 
 # Infra
 
-Infrastructure as code for [nix.pizza](https://nix.pizza) and the [nix-pizza](https://github.com/nix-pizza) GitHub organization, which also hosts the [Nix Milano](https://milano.nix.pizza) community. It supersedes the former `nix-milano/infra` repository, whose history is merged here.
+Infrastructure as code for [nix.pizza](https://nix.pizza) and the [nix-pizza](https://github.com/nix-pizza) GitHub organization, which also hosts the [Nix Milano](https://milano.nix.pizza) community.
 
 ## What's inside
 
