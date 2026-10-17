@@ -1,76 +1,86 @@
 terraform {
-  encryption {
-    key_provider "pbkdf2" "state-key" {
-      passphrase = var.opentofu_passphrase
-    }
-
-    method "aes_gcm" "encryption_method" {
-      keys = key_provider.pbkdf2.state-key
-    }
-
-    state {
-      method   = method.aes_gcm.encryption_method
-      enforced = true
+  required_providers {
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.0"
     }
   }
 }
 
-variable "opentofu_passphrase" {
-  type        = string
-  description = "Passphrase for encrypting/decrypting the state file."
-  sensitive   = true
-}
-
-variable "github_token" {
-  type        = string
-  description = "GitHub Personal Access Token with admin:org scope."
-  sensitive   = true
-}
-
+# Personal access token (classic, admin:org) of ambrogio-bot, an owner of the organization
 provider "github" {
   token = var.github_token
-  owner = "Nix-Milano"
+  owner = "nix-pizza"
 }
 
-resource "github_organization_settings" "org_settings" {
-  billing_email             = "milan@nix.pizza"
-  description               = "Nix community in Milan"
-  location                  = "Milan, Italy"
+locals {
+  github_members = jsondecode(file(var.github_members))
+}
+
+import {
+  to = github_organization_settings.org
+  id = "nix-pizza"
+}
+
+resource "github_organization_settings" "org" {
+  billing_email             = "info@nix.pizza"
   has_organization_projects = true
   has_repository_projects   = true
 
-  members_can_create_repositories         = false
-  members_can_create_public_repositories  = false
-  members_can_create_private_repositories = false
-  members_can_fork_private_repositories   = false # optional
+  members_can_create_repositories         = true
+  members_can_create_public_repositories  = true
+  members_can_create_private_repositories = true
+  members_can_fork_private_repositories   = false
+  members_can_create_pages                = true
+  members_can_create_public_pages         = true
+  members_can_create_private_pages        = true
 
-  default_repository_permission = "read" # options: "read", "write", "admin", "none"
+  default_repository_permission = "read"
+}
+
+# Existing members are imported, the others receive an invitation on apply
+import {
+  for_each = toset(["aciceri", "zarelit", "ambrogio-bot"])
+  to       = github_membership.member[each.key]
+  id       = "nix-pizza:${each.key}"
 }
 
 resource "github_membership" "member" {
-  for_each = {
-    for member in jsondecode(file("users.json")) :
-    member.username => member
-  }
+  for_each = local.github_members
 
-  username = each.value.username
-  role     = each.value.role
+  username = each.key
+  role     = each.value
+}
+
+import {
+  to = github_repository.infra
+  id = "infra"
 }
 
 resource "github_repository" "infra" {
   name        = "infra"
-  description = "Infrastructure"
+  description = "nix.pizza infrastructure"
   visibility  = "public"
+
+  has_issues      = true
+  has_projects    = true
+  has_wiki        = false
+  has_discussions = false
+
+  allow_merge_commit     = true
+  allow_squash_merge     = true
+  allow_rebase_merge     = true
+  allow_auto_merge       = false
+  delete_branch_on_merge = false
 }
 
 resource "github_repository_ruleset" "strict-rules" {
   name        = "strict-rules"
-  target      = "branch" # Targeting branches (not tags)
-  enforcement = "active" # Enforced immediately
-  repository  = "infra"
+  target      = "branch"
+  enforcement = "active"
+  repository  = github_repository.infra.name
 
   conditions {
-    # Apply to all branches within the repository
     ref_name {
       include = ["~ALL"]
       exclude = []
@@ -78,14 +88,14 @@ resource "github_repository_ruleset" "strict-rules" {
   }
 
   rules {
-    creation                = true # Disallow branch creation unless bypass is granted
-    deletion                = true # Disallow branch deletion unless bypass is granted
-    required_linear_history = true # Disallow merge commits, enforce linear history
+    creation                = true
+    deletion                = true
+    required_linear_history = true
 
     branch_name_pattern {
       name     = "Main branch naming rule"
       operator = "regex"
-      pattern  = "^master$" # Anchored regex for exact match
+      pattern  = "^main$"
       negate   = false
     }
 
@@ -93,19 +103,22 @@ resource "github_repository_ruleset" "strict-rules" {
       name     = "No WIP in commit messages"
       operator = "contains"
       pattern  = "WIP"
-      negate   = true # Disallow commit messages containing "WIP"
+      negate   = true
     }
 
     pull_request {
-      dismiss_stale_reviews_on_push     = true # Require re-review after new commits
-      require_last_push_approval        = true # Last push must be approved by someone else
-      required_approving_review_count   = 1    # Require at least 1 approvals
-      required_review_thread_resolution = true # All conversations must be resolved
+      dismiss_stale_reviews_on_push     = true
+      require_last_push_approval        = true
+      required_approving_review_count   = 1
+      required_review_thread_resolution = true
     }
   }
+
+  # Organization owners can always bypass; the provider documents actor_id = 1
+  # for this actor type.
   bypass_actors {
     actor_type  = "OrganizationAdmin"
-    actor_id    = 205444294
+    actor_id    = 1
     bypass_mode = "always"
   }
 }
