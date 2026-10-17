@@ -1,7 +1,7 @@
 with (import ../keys).infra.sshKeys; let
   coreKeys = [ aciceri.key zarelit.key github.key ];
   # Credentials of the ambrogio-bot GitHub account, for humans only
-  botOwners = [ aciceri.key aciceri-pike.key zarelit.key albertodvp.key ];
+  botOwners = [ aciceri.key zarelit.key albertodvp.key ];
 in
 {
   "AWS_ACCESS_KEY_ID.age".publicKeys = coreKeys;
@@ -14,7 +14,7 @@ in
 
   "TF_VAR_hcloud_token.age".publicKeys = coreKeys;
 
-  "TF_VAR_github_token.age".publicKeys = coreKeys ++ [ aciceri-pike.key ];
+  "TF_VAR_github_token.age".publicKeys = coreKeys;
 
   "CACHIX_AUTH_TOKEN.age".publicKeys = coreKeys;
 
