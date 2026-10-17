@@ -8,11 +8,6 @@ locals {
   github_members = jsondecode(file(var.github_members))
 }
 
-import {
-  to = github_organization_settings.org
-  id = "nix-pizza"
-}
-
 resource "github_organization_settings" "org" {
   billing_email             = "info@nix.pizza"
   has_organization_projects = true
@@ -29,33 +24,11 @@ resource "github_organization_settings" "org" {
   default_repository_permission = "read"
 }
 
-# Existing members are imported, the others receive an invitation on apply.
-# Static blocks: the OpenTofu in CI predates for_each in import.
-import {
-  to = github_membership.member["aciceri"]
-  id = "nix-pizza:aciceri"
-}
-
-import {
-  to = github_membership.member["zarelit"]
-  id = "nix-pizza:zarelit"
-}
-
-import {
-  to = github_membership.member["ambrogio-bot"]
-  id = "nix-pizza:ambrogio-bot"
-}
-
 resource "github_membership" "member" {
   for_each = local.github_members
 
   username = each.key
   role     = each.value
-}
-
-import {
-  to = github_repository.infra
-  id = "infra"
 }
 
 resource "github_repository" "infra" {
