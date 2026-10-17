@@ -1,5 +1,7 @@
 with (import ../keys).infra.sshKeys; let
   coreKeys = [ aciceri.key zarelit.key github.key ];
+  # Credentials of the ambrogio-bot GitHub account, for humans only
+  botOwners = [ aciceri.key aciceri-pike.key zarelit.key albertodvp.key ];
 in
 {
   "AWS_ACCESS_KEY_ID.age".publicKeys = coreKeys;
@@ -12,10 +14,15 @@ in
 
   "TF_VAR_hcloud_token.age".publicKeys = coreKeys;
 
+  "TF_VAR_github_token.age".publicKeys = coreKeys ++ [ aciceri-pike.key ];
+
   "CACHIX_AUTH_TOKEN.age".publicKeys = coreKeys;
 
   "HEDGEDOC_ENVIRONMENT.age".publicKeys = coreKeys ++ [ nix-pizza.key ];
   "WASTEBIN_ENVIRONMENT.age".publicKeys = coreKeys ++ [ nix-pizza.key ];
   "HETZNER_STORAGE_BOX_SSH_PASSWORD.age".publicKeys = coreKeys ++ [ nix-pizza.key ];
   "NIX_PIZZA_RESTIC_PASSWORD.age".publicKeys = coreKeys ++ [ nix-pizza.key ];
+
+  "ambrogio_bot_password.age".publicKeys = botOwners;
+  "ambrogio_bot_ssh_private_key.age".publicKeys = botOwners;
 }
