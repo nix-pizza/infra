@@ -10,9 +10,11 @@
       inputs.agenix.nixosModules.age
       inputs.simple-nixos-mailserver.nixosModules.mailserver
       {
+        # The CI key lets the Deploy workflow run nixos-rebuild on the host
         users.users.root.openssh.authorizedKeys.keys = with config.infra.sshKeys; [
           aciceri.key
           zarelit.key
+          github.key
         ];
       }
     ];
