@@ -5,18 +5,19 @@ in
 {
   mailserver = {
     enable = true;
+    stateVersion = 5;
     fqdn = "mail.nix.pizza";
     domains = [ "nix.pizza" ];
 
     # nix run nixpkgs#mkpasswd -- -sm bcrypt
-    loginAccounts = {
+    accounts = {
       "aciceri@nix.pizza".hashedPassword = "$2b$05$SHmYA8c9Nxx8A7dbqdsInugMNWd5mZydtC485VEbQ9NtoWJ2qUNCC";
       "zarel@nix.pizza".hashedPassword = "$2b$05$XHbxpdM8lRDwyhh.iZiEFe0HVmOutLEZBfCBTKTABb9cCB5QVPrfO";
       "albertodvp@nix.pizza".hashedPassword = "$2b$05$2SD6.tz4CZ7n7amcL9LLzua/vDbM3..laGAGYXylM94m9l4EMzLlW";
       "nonnofelice@nix.pizza".hashedPassword = "$2b$05$kkOTi4r1W3B6N.tee7gpAOHvsItr00LVi.Onv4gaGWRKDSqDAjA5u";
     };
 
-    extraVirtualAliases =
+    aliases =
       let
         owners = [
           "aciceri@nix.pizza"
@@ -45,10 +46,10 @@ in
       ];
     };
 
-    # Use Let's Encrypt certificates. Note that this needs to set up a stripped
-    # down nginx and opens port 80.
-    certificateScheme = "acme-nginx";
+    x509.useACMEHost = cfg.fqdn;
   };
+
+  services.nginx.virtualHosts.${cfg.fqdn}.enableACME = true;
 
   services.roundcube = {
     enable = true;
@@ -56,15 +57,14 @@ in
     extraConfig = ''
       # starttls needed for authentication, so the fqdn required to match
       # the certificate
-      $config['smtp_server'] = "tls://${config.mailserver.fqdn}";
+      $config['smtp_server'] = "tls://${cfg.fqdn}";
       $config['smtp_user'] = "%u";
       $config['smtp_pass'] = "%p";
     '';
   };
 
   environment.persistence."/persist".directories = [
-    cfg.mailDirectory
-    cfg.certificateDirectory
-    cfg.dkimKeyDirectory
+    cfg.storage.path
+    cfg.dkim.keyDirectory
   ];
 }
