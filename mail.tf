@@ -4,12 +4,27 @@ resource "hcloud_rdns" "reverse_dns_4" {
   dns_ptr    = "mail.nix.pizza"
 }
 
+resource "hcloud_rdns" "reverse_dns_6" {
+  server_id  = hcloud_server.nix-pizza.id
+  ip_address = hcloud_server.nix-pizza.ipv6_address
+  dns_ptr    = "mail.nix.pizza"
+}
+
 resource "cloudflare_record" "mail_record_4" {
   provider = cloudflare.dns
   zone_id  = data.cloudflare_zone.nix_pizza_zone.id
   name     = "mail.nix.pizza"
   value    = hcloud_server.nix-pizza.ipv4_address
   type     = "A"
+  ttl      = 10800
+}
+
+resource "cloudflare_record" "mail_record_6" {
+  provider = cloudflare.dns
+  zone_id  = data.cloudflare_zone.nix_pizza_zone.id
+  name     = "mail.nix.pizza"
+  value    = hcloud_server.nix-pizza.ipv6_address
+  type     = "AAAA"
   ttl      = 10800
 }
 
