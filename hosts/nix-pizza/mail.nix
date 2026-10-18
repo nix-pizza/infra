@@ -55,9 +55,8 @@ in
     enable = true;
     hostName = "webmail.nix.pizza";
     extraConfig = ''
-      # starttls needed for authentication, so the fqdn required to match
-      # the certificate
-      $config['smtp_server'] = "tls://${cfg.fqdn}";
+      $config['imap_host'] = "ssl://${cfg.fqdn}:993";
+      $config['smtp_host'] = "ssl://${cfg.fqdn}:465";
       $config['smtp_user'] = "%u";
       $config['smtp_pass'] = "%p";
     '';
