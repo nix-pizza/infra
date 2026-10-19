@@ -32,7 +32,7 @@ resource "cloudflare_record" "mx_record_4" {
   provider = cloudflare.dns
   zone_id  = data.cloudflare_zone.nix_pizza_zone.id
   type     = "MX"
-  name     = "@"
+  name     = "nix.pizza"
   value    = "mail.nix.pizza"
   priority = 10
   proxied  = false
@@ -62,7 +62,7 @@ resource "cloudflare_record" "dkim_record" {
 resource "cloudflare_record" "dmarc_record" {
   provider = cloudflare.dns
   zone_id  = data.cloudflare_zone.nix_pizza_zone.id
-  name     = "_dmarc"
+  name     = "_dmarc.nix.pizza"
   value    = "v=DMARC1; p=reject; pct=100"
   type     = "TXT"
   ttl      = 10800
