@@ -1,22 +1,25 @@
-{ pkgs, lib, ... }:
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   markdown = ./nix-milano.md;
   css = ./nix-milano.css;
-  nix-milano = pkgs.runCommandNoCC "nix-milano" { } ''
+  nix-milano = pkgs.runCommandNoCC "nix-milano" {} ''
     mkdir $out
     cd $out
     cp ${css} nix-milano.css
     cp -R ${./assets} assets
+    cp -R ${./artwork} artwork
     ${lib.getExe pkgs.pandoc} --from markdown --css nix-milano.css -s ${markdown} -o index.html --metadata title="Nix Milano"
   '';
-in
-{
+in {
   services.nginx = {
     virtualHosts."milano.nix.pizza" = {
       enableACME = true;
       forceSSL = true;
       locations."/".root = nix-milano;
-      serverAliases = [ "milano.nix.pizza" ];
+      serverAliases = ["milano.nix.pizza"];
     };
   };
 }
