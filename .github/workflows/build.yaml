@@ -4,18 +4,16 @@ on:
   - workflow_dispatch
 jobs:
   nix-flake-check:
-    # TODO idea: instead of using QEMU (which is slow) use the host as remote builder
     strategy:
       matrix:
         system: ["aarch64-linux"]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     name: "Build checks for ${{ matrix.system }}"
     steps:
     - run: |
         mkdir -p /home/runner/.ssh
         echo "${{ secrets.SSH_KEY }}" > /home/runner/.ssh/id_ed25519
         chmod 600 /home/runner/.ssh/id_ed25519
-    - run: "[ '${{ matrix.system }}' == 'aarch64-linux' ] && sudo apt-get install -y qemu-user-static || true"
     - uses: actions/checkout@v7
     - uses: cachix/install-nix-action@v31
       with:
