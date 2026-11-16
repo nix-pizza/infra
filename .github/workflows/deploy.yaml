@@ -14,7 +14,7 @@ jobs:
           - system: x86_64-linux
             runner: ubuntu-24.04
     runs-on: ${{ matrix.runner }}
-    name: "Build checks for ${{ matrix.system }}"
+    name: "Deploy checks for ${{ matrix.system }}"
     steps:
     - run: |
         mkdir -p /home/runner/.ssh
