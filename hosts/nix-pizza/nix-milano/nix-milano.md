@@ -1,4 +1,4 @@
-![](assets/nix-milano-logo.webp)
+![](artwork/nix-milano.svg)
 
 # Meetup
 Per vedere i prossimi eventi organizzati o iscriverti ci trovi [su meetup](https://www.meetup.com/nix-milano/).
