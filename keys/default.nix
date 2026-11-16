@@ -39,7 +39,7 @@
       githubRole = "member";
     };
     amerocu = {
-      githubRole = "member";
+      githubRole = "admin";
     };
     c3n21 = {
       key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEe8GWE28Ay4ZWLGVbCFZ9P+gC/bavqdemUbYcUlrpkI";
